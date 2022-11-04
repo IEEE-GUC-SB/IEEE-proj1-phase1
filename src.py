@@ -22,7 +22,7 @@ def generate_dummy_data():
 		df = pd.DataFrame(data={})
 		df.to_csv("./attendees.csv", sep=',',index=False)
 		names = ['Amir Tarek', 'Farida Maheeb', 'Omar Hisham']
-		emails = ['amir.awad@guc.edu.eg', 'farida.maheeb@guc.edu.eg', 'omar.hisham@guc.edu.eg']
+		emails = ['amir.awad@student.guc.edu.eg', 'farida.maheeb@student.guc.edu.eg', 'omar.hisham@student.guc.edu.eg']
 		ids = ['52-23296','52-23442', '52-1343']
 		df['Name'] = names
 		df['Email'] = emails
