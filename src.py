@@ -108,7 +108,7 @@ def insert_qr_codes():
 
 
 def main():
-	retreive_data()
+	retrieve_data()
 	upload_to_drive()
 	get_qr_codes_urls()
 	insert_qr_codes()
