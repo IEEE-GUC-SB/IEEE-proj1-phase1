@@ -1,4 +1,8 @@
 attendees.csv
 credentials.json
-*.png
+attendees.csv
+qr0.png
+qr1.png
+qr2.png
+qr2.png
 token_drive_v3.pickle
