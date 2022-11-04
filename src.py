@@ -18,6 +18,13 @@ def generate_dummy_data():
 	if path.exists('./attendees.csv'):
 		df = pd.read_csv('attendees.csv')
 		return df
+	elif path.exists('./attendees.xlsx'):
+		read_file = pd.read_excel ("attendees.xlsx")
+		read_file.to_csv ("attendees.csv", 
+                  index = None,
+                  header=True)
+		df = pd.DataFrame(pd.read_csv("attendees.csv"))
+		return df
 	else:
 		df = pd.DataFrame(data={})
 		df.to_csv("./attendees.csv", sep=',',index=False)
@@ -103,7 +110,8 @@ def insert_qr_codes():
 	ids = pd.Series(qr_codes_ids)
 	df['QR_code'] = links
 	df['QR_code_id'] = ids
-	df.to_csv('attendees.csv', index=False)
+	df.to_csv('attendees_modified.csv', index=False)
+	df.to_excel("attendees_modified.xlsx") 
 
 
 
