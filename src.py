@@ -13,7 +13,6 @@ API_Name = 'drive'
 API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
-
 def generate_dummy_data():
 	if path.exists('./attendees.csv'):
 		df = pd.read_csv('attendees.csv')
@@ -53,7 +52,6 @@ def retrieve_data():
 	for idx in df.index:
 		attendee_data = str(df['Name'][idx])+'\n'+str(df['Email'][idx]) + '\n' + str(df['ID'][idx])
 		qr_generating(attendee_data, idx)
-
 
 
 qr_codes_ids = []

@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "ieee-proj1-phase1"
+version = "0.1.0"
+description = ""
+authors = ["amir-awad <amirawad004@gmail.com>"]
+readme = "README.md"
+packages = [{include = "ieee_proj1_phase1"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+openpyxl = "^3.0.10"
+pandas = "^1.5.1"
+qrcode = "^7.3.1"
+google-api-python-client = "^2.65.0"
+google-auth-oauthlib = "^0.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
