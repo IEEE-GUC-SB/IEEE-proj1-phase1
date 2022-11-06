@@ -49,9 +49,13 @@ def qr_generating(data, idx):
 
 
 def retrieve_data():
-	for idx in df.index:
-		attendee_data = str(df['Name'][idx])+'\n'+str(df['Email'][idx]) + '\n' + str(df['ID'][idx])
-		qr_generating(attendee_data, idx)
+	attributes = ['Name','Email','ID','Phone','Role']
+	for row in range(0, len(df.index),1):
+		attendee_data=''
+		for attr in range(0,len(df.columns),1):
+			attendee_data += str(df.iloc[row,attr])+'\n'
+		print(attendee_data)
+		qr_generating(attendee_data, row)
 
 
 qr_codes_ids = []
