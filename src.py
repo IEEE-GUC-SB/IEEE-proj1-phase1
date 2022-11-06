@@ -30,9 +30,13 @@ def generate_dummy_data():
 		names = ['Amir Tarek', 'Farida Maheeb', 'Omar Hisham']
 		emails = ['amir.awad@student.guc.edu.eg', 'farida.maheeb@student.guc.edu.eg', 'omar.hisham@student.guc.edu.eg']
 		ids = ['52-23296','52-23442', '52-1343']
+		phones = ['0101323432','012321343','01523434']
+		roles= ['L','LS','L']
 		df['Name'] = names
 		df['Email'] = emails
 		df['ID'] = ids
+		df['Phone'] = phones
+		df['Role'] = roles
 		return df
 
 df = generate_dummy_data()
@@ -54,7 +58,6 @@ def retrieve_data():
 		attendee_data=''
 		for attr in range(0,len(df.columns),1):
 			attendee_data += str(df.iloc[row,attr])+'\n'
-		print(attendee_data)
 		qr_generating(attendee_data, row)
 
 
