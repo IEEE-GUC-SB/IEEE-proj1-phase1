@@ -7,6 +7,9 @@ import qrcode
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
+import random
+from faker import Faker
+from faker.providers import internet
 
 CLIENT_SECRET_FILE = 'credentials.json'
 API_Name = 'drive'
@@ -25,19 +28,31 @@ def generate_dummy_data():
 		df = pd.DataFrame(pd.read_csv("attendees.csv"))
 		return df
 	else:
-		df = pd.DataFrame(data={})
+		faker = Faker()
+		df = pd.DataFrame(data = {})
 		df.to_csv("./attendees.csv", sep=',',index=False)
-		names = ['Amir Tarek', 'Farida Maheeb', 'Omar Hisham']
-		emails = ['amir.awad@student.guc.edu.eg', 'farida.maheeb@student.guc.edu.eg', 'omar.hisham@student.guc.edu.eg']
-		ids = ['52-23296','52-23442', '52-1343']
-		phones = ['0101323432','012321343','01523434']
-		roles= ['L','LS','L']
-		df['Name'] = names
-		df['Email'] = emails
-		df['ID'] = ids
-		df['Phone'] = phones
-		df['Role'] = roles
-		return df
+		id_prefixes = ['L-', 'W-', 'HW-', 'SW-']
+		names = []
+		emails = []
+		ids = []
+
+		for _ in range(6):
+			name = faker.name()
+			id = f'{random.choice(id_prefixes)}{faker.random_number(digits = 5)}'
+			first_name = name.split()[0].lower()
+			last_name = name.split()[1].lower()
+			email = f'{first_name}.{last_name}@{faker.free_email_domain()}'
+
+			names.append(name)
+			emails.append(email)
+			ids.append(id)
+
+	df['Name'] = names
+	df['Email'] = emails
+	df['ID'] = ids
+
+	df.to_csv("./attendees.csv")
+	return df
 
 df = generate_dummy_data()
 
