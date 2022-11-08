@@ -60,8 +60,6 @@ def qr_generating(data, idx):
 	img.save('qr' + str(idx) + '.png')
 	file_names.append('qr' + str(idx) + '.png')
 
-
-
 def retrieve_data():
 	attributes = ['Name','Email','ID','Phone','Role']
 	for row in range(0, len(df.index),1):
@@ -73,49 +71,41 @@ def retrieve_data():
 
 qr_codes_ids = []
 def upload_to_drive(service):
-	try:
-		for file_name in file_names:
-			mime_type = 'image/png'
-			file_metadata = {
-				'name' : file_name
-			}
-
+	for file_name in file_names:
+		mime_type = 'image/png'
+		file_metadata = {
+			'name' : file_name
+		}
+		try:
 			media = MediaFileUpload('./{0}'.format(file_name), mimetype=mime_type)
 			file = service.files().create(
 				body=file_metadata,
 				media_body=media,
 				fields='id'
 			).execute()
+		except HttpError as error:
+			print(F'An error occurred: {error}')
 
-			qr_codes_ids.append(file.get("id"))
-
-	except HttpError as error:
-		print(F'An error occurred: {error}')
-		
-
+		qr_codes_ids.append(file.get("id"))
 
 qr_codes_links = []
 def get_qr_codes_urls(service):
 	for qr_code_id in qr_codes_ids:
+		request_body = {
+			'role' : 'reader',
+			'type' : 'anyone'			
+		}
+
 		try:
-			request_body = {
-				'role' : 'reader',
-				'type' : 'anyone'			
-			}
-
 			response_permission = service.permissions().create(fileId=qr_code_id, body=request_body).execute()
-
 			response_shared_link = service.files().get(
 				fileId=qr_code_id,
 				fields='webViewLink'
 			).execute()
-
-			qr_codes_links.append(response_shared_link.get('webViewLink'))
-
 		except HttpError as error:
 			print(F'An error occurred: {error}')
 
-
+		qr_codes_links.append(response_shared_link.get('webViewLink'))
 
 def insert_qr_codes():
 	links = pd.Series(qr_codes_links)
@@ -125,8 +115,6 @@ def insert_qr_codes():
 	df.to_csv('attendees_modified.csv', index=False)
 	df.to_excel("attendees_modified.xlsx") 
 
-
-
 def main():
 	service = create_service()
 	retrieve_data()
@@ -134,6 +122,5 @@ def main():
 	get_qr_codes_urls(service)
 	insert_qr_codes()
  
-
 if __name__=="__main__":
   main()
