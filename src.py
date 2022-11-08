@@ -143,7 +143,6 @@ def insert_qr_codes():
     ids = pd.Series(qr_codes_ids)
     df["QR_code"] = links
     df["QR_code_id"] = ids
-    df.to_csv("attendees_modified.csv", index=False)
     df.to_excel("attendees_modified.xlsx")
 
 
