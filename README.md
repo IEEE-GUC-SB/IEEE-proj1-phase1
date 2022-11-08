@@ -21,7 +21,7 @@ $ poetry install
 ```
 $ cd attendees-qrcode
 $ python3 src.py
-``` 
+```
 ### Contributors
 - [Amir Tarek](https://github.com/amir-awad) (amirtarek04@gmail.com)
 - [Farida Maheeb](https://github.com/FaridaAbdelghaffar) (fmaheeb@gmail.com)
