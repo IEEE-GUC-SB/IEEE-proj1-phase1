@@ -1,3 +1,4 @@
+import os
 import random
 from os import path
 
@@ -76,11 +77,14 @@ def qr_generating(data, idx):
         module_drawer=RoundedModuleDrawer(),
         color_mask=RadialGradiantColorMask(),
     )
-    img.save("qr" + str(idx) + ".png")
+    img.save("./qr_images/" + "qr" + str(idx) + ".png")
     file_names.append("qr" + str(idx) + ".png")
 
 
 def retrieve_data():
+    IMAGES_PATH = "./qr_images"
+    if not path.exists(IMAGES_PATH):
+        os.mkdir(IMAGES_PATH)
     attributes = ["Name", "Email", "ID", "Phone", "Role"]
     for row in range(0, len(df.index), 1):
         attendee_data = ""
