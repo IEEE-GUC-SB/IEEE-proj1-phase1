@@ -6,7 +6,7 @@ In order to run the script, you can either:
 
 1. Delete the credentials file that exists in the project directory and configure the api youself, then use your own credentials (which takes much time).
 
-2. You can be added as a test user by sending an email (containing your gmail email address) to one of the contributors. You can find our emails in the Contributors section.
+2. Be added as a test user by sending an email (containing your gmail email address) to one of the contributors. You can find our emails in the  ### Contributors section.
 
 
 ### Installation
