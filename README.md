@@ -10,7 +10,7 @@ In order to run the script, you can either:
 
 
 ### Installation
-The script requires 'poetry' (a dependency management tool) to run. You can install 'poetry' with pip as such:
+The script requires ```poetry``` (a dependency management tool) to run. You can install ```poetry``` with pip as such:
 ```
 $ pip3 install poetry
 $ poetry install
