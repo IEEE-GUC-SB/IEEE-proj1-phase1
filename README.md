@@ -6,7 +6,7 @@ In order to run the script, you can either:
 
 1. Delete the credentials file that exists in the project directory and configure the api youself, then use your own credentials (which takes much time).
 
-2. You can be added as a test user by sending an email (containing your gmail email address) to one of the contributors (e.g amirawad004@gmail.com)
+2. You can be added as a test user by sending an email (containing your gmail email address) to one of the contributors. You can find our emails in the Contributors section.
 
 
 ### Installation
@@ -23,6 +23,6 @@ $ cd attendees-qrcode
 $ python3 src.py
 ``` 
 ### Contributors
-- [Amir Tarek](https://github.com/amir-awad)
-- [Farida Maheeb](https://github.com/FaridaAbdelghaffar)
-- [Omar Hesham](https://github.com/omarhesham02)
+- [Amir Tarek](https://github.com/amir-awad) (amirtarek04@gmail.com)
+- [Farida Maheeb](https://github.com/FaridaAbdelghaffar) (fmaheeb@gmail.com)
+- [Omar Hesham](https://github.com/omarhesham02) (omar.hesham-youssef@outlook.com)
