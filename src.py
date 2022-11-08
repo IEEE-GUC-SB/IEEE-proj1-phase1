@@ -1,5 +1,5 @@
 from googleapiclient.http import MediaFileUpload
-from google_services import Create_Service
+from google_services import create_service
 from googleapiclient.errors import HttpError
 from os import path
 import pandas as pd
@@ -10,11 +10,6 @@ from qrcode.image.styles.colormasks import RadialGradiantColorMask
 import random
 from faker import Faker
 from faker.providers import internet
-
-CLIENT_SECRET_FILE = 'credentials.json'
-API_Name = 'drive'
-API_VERSION = 'v3'
-SCOPES = ['https://www.googleapis.com/auth/drive']
 
 def generate_dummy_data():
 	if path.exists('./attendees.csv'):
@@ -77,10 +72,8 @@ def retrieve_data():
 
 
 qr_codes_ids = []
-def upload_to_drive():
+def upload_to_drive(service):
 	try:
-		service = Create_Service(CLIENT_SECRET_FILE, API_Name, API_VERSION, SCOPES)
-
 		for file_name in file_names:
 			mime_type = 'image/png'
 			file_metadata = {
@@ -102,8 +95,7 @@ def upload_to_drive():
 
 
 qr_codes_links = []
-def get_qr_codes_urls():
-	service = Create_Service(CLIENT_SECRET_FILE, API_Name, API_VERSION, SCOPES)
+def get_qr_codes_urls(service):
 	for qr_code_id in qr_codes_ids:
 		try:
 			request_body = {
@@ -136,9 +128,10 @@ def insert_qr_codes():
 
 
 def main():
+	service = create_service()
 	retrieve_data()
-	upload_to_drive()
-	get_qr_codes_urls()
+	upload_to_drive(service)
+	get_qr_codes_urls(service)
 	insert_qr_codes()
  
 
