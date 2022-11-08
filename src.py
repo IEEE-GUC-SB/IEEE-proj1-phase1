@@ -12,13 +12,7 @@ from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
 from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
 
-from google_services import Create_Service
-
-CLIENT_SECRET_FILE = "credentials.json"
-API_Name = "drive"
-API_VERSION = "v3"
-SCOPES = ["https://www.googleapis.com/auth/drive"]
-
+from google_services import create_service
 
 def generate_dummy_data():
     if path.exists("./attendees.csv"):
@@ -56,11 +50,9 @@ def generate_dummy_data():
     df.to_csv("./attendees.csv")
     return df
 
-
 df = generate_dummy_data()
 
 file_names = []
-
 
 def qr_generating(data, idx):
     qr = qrcode.QRCode(
@@ -80,7 +72,6 @@ def qr_generating(data, idx):
     img.save("./qr_images/" + "qr" + str(idx) + ".png")
     file_names.append("qr" + str(idx) + ".png")
 
-
 def retrieve_data():
     IMAGES_PATH = "./qr_images"
     if not path.exists(IMAGES_PATH):
@@ -94,54 +85,43 @@ def retrieve_data():
 
 
 qr_codes_ids = []
+def upload_to_drive(service):
+	for file_name in file_names:
+		mime_type = 'image/png'
+		file_metadata = {
+			'name' : file_name
+		}
+		try:
+			media = MediaFileUpload('./{0}'.format(file_name), mimetype=mime_type)
+			file = service.files().create(
+				body=file_metadata,
+				media_body=media,
+				fields='id'
+			).execute()
+		except HttpError as error:
+			print(F'An error occurred: {error}')
 
-
-def upload_to_drive():
-    try:
-        service = Create_Service(CLIENT_SECRET_FILE, API_Name, API_VERSION, SCOPES)
-
-        for file_name in file_names:
-            mime_type = "image/png"
-            file_metadata = {"name": file_name}
-
-            media = MediaFileUpload("./{0}".format(file_name), mimetype=mime_type)
-            file = (
-                service.files()
-                .create(body=file_metadata, media_body=media, fields="id")
-                .execute()
-            )
-
-            qr_codes_ids.append(file.get("id"))
-
-    except HttpError as error:
-        print(f"An error occurred: {error}")
-
+		qr_codes_ids.append(file.get("id"))
 
 qr_codes_links = []
+def get_qr_codes_urls(service):
+	for qr_code_id in qr_codes_ids:
+		request_body = {
+			'role' : 'reader',
+			'type' : 'anyone'			
+		}
 
+		try:
+			response_permission = service.permissions().create(fileId=qr_code_id, body=request_body).execute()
+			response_shared_link = service.files().get(
+				fileId=qr_code_id,
+				fields='webViewLink'
+			).execute()
+		except HttpError as error:
+			print(F'An error occurred: {error}')
 
-def get_qr_codes_urls():
-    service = Create_Service(CLIENT_SECRET_FILE, API_Name, API_VERSION, SCOPES)
-    for qr_code_id in qr_codes_ids:
-        try:
-            request_body = {"role": "reader", "type": "anyone"}
-
-            response_permission = (
-                service.permissions()
-                .create(fileId=qr_code_id, body=request_body)
-                .execute()
-            )
-
-            response_shared_link = (
-                service.files().get(fileId=qr_code_id, fields="webViewLink").execute()
-            )
-
-            qr_codes_links.append(response_shared_link.get("webViewLink"))
-
-        except HttpError as error:
-            print(f"An error occurred: {error}")
-
-
+		qr_codes_links.append(response_shared_link.get('webViewLink'))
+    
 def insert_qr_codes():
     links = pd.Series(qr_codes_links)
     ids = pd.Series(qr_codes_ids)
@@ -149,13 +129,12 @@ def insert_qr_codes():
     df["QR_code_id"] = ids
     df.to_excel("attendees_modified.xlsx")
 
-
 def main():
-    retrieve_data()
-    upload_to_drive()
-    get_qr_codes_urls()
-    insert_qr_codes()
-
-
-if __name__ == "__main__":
-    main()
+	service = create_service()
+	retrieve_data()
+	upload_to_drive(service)
+	get_qr_codes_urls(service)
+	insert_qr_codes()
+ 
+if __name__=="__main__":
+  main()
