@@ -9,12 +9,12 @@ def generate_dummy_data():
 	df = pd.DataFrame(data = {})
 	df.Name = "attendees.csv"
 	df.to_csv(df.Name, sep=',',index=False)
-	id_prefixes = ['L-', 'W', 'HW-', 'SW-']
+	id_prefixes = ['L-', 'W-', 'HW-', 'SW-']
 	names = []
 	emails = []
 	ids = []
 
-	n = eval(input("Number of rows? \n"))
+	n = int(input("Number of rows? \n"))
 
 	for _ in range(n):
 		name = faker.name()
