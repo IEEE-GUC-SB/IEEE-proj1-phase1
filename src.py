@@ -25,7 +25,7 @@ HEADERS = {
 }
 
 
-def generate_dummy_data():
+def read_input_data():
     if path.exists(ATTENDEES_CSV_PATH):
         df = pd.read_csv(ATTENDEES_CSV_PATH)
     elif path.exists(ATTENDEES_XLSX_PATH):
@@ -33,9 +33,9 @@ def generate_dummy_data():
         read_file.to_csv(ATTENDEES_CSV_PATH, index=None, header=True)
         df = pd.DataFrame(pd.read_csv(ATTENDEES_CSV_PATH))
     else:
-        if not path.exists(ATTENDEES_CSV_PATH)
+        if not path.exists(ATTENDEES_CSV_PATH):
            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), ATTENDEES_CSV_PATH)
-        elif not path.exists(ATTENDEES_XLSX_PATH)
+        elif not path.exists(ATTENDEES_XLSX_PATH):
            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), ATTENDEES_XLSX_PATH) 
 
     return df
