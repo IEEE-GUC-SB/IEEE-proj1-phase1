@@ -13,16 +13,30 @@ from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
 from google_services import create_service
 from data_generator import generate_dummy_data
 
+IMAGES_PATH = "./qr_images"
+ATTENDEES_CSV_PATH = "./attendees.csv"
+ATTENDEES_XLSX_PATH = "./attendees.xlsx"
+HEADERS = {
+    "name": "Name",
+    "email": "Email",
+    "id": "ID",
+    "phone": "Phone",
+    "role": "Role",
+}
 
-def read_input_file():
-    if path.exists("./attendees.csv"):
-        df = pd.read_csv("attendees.csv")
-    elif path.exists("./attendees.xlsx"):
-        read_file = pd.read_excel("attendees.xlsx")
-        read_file.to_csv("attendees.csv", index=None, header=True)
-        df = pd.DataFrame(pd.read_csv("attendees.csv"))
+
+def generate_dummy_data():
+    if path.exists(ATTENDEES_CSV_PATH):
+        df = pd.read_csv(ATTENDEES_CSV_PATH)
+    elif path.exists(ATTENDEES_XLSX_PATH):
+        read_file = pd.read_excel(ATTENDEES_XLSX_PATH)
+        read_file.to_csv(ATTENDEES_CSV_PATH, index=None, header=True)
+        df = pd.DataFrame(pd.read_csv(ATTENDEES_CSV_PATH))
     else:
-        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), 'attendees.csv')
+        if not path.exists(ATTENDEES_CSV_PATH)
+           raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), ATTENDEES_CSV_PATH)
+        elif not path.exists(ATTENDEES_XLSX_PATH)
+           raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), ATTENDEES_XLSX_PATH) 
 
     return df
 
@@ -43,15 +57,14 @@ def qr_generating(data, idx):
         module_drawer=RoundedModuleDrawer(),
         color_mask=RadialGradiantColorMask(),
     )
-    img.save("./qr_images/" + "qr" + str(idx) + ".png")
+    img.save(path.join(IMAGES_PATH, "qr" + str(idx) + ".png"))
     file_names.append("qr" + str(idx) + ".png")
 
 
 def retrieve_data():
-    IMAGES_PATH = "./qr_images"
     if not path.exists(IMAGES_PATH):
         os.mkdir(IMAGES_PATH)
-    attributes = ["Name", "Email", "ID", "Phone", "Role"]
+    attributes = list(HEADERS.values())
     for row in range(0, len(df.index), 1):
         attendee_data = ""
         for attr in range(0, len(df.columns), 1):
@@ -68,7 +81,7 @@ def upload_to_drive(service):
         file_metadata = {"name": file_name}
         try:
             media = MediaFileUpload(
-                "./qr_images/{0}".format(file_name), mimetype=mime_type
+                path.join(IMAGES_PATH, "{0}").format(file_name), mimetype=mime_type
             )
             file = (
                 service.files()
