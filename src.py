@@ -83,7 +83,7 @@ def qr_generating(data, idx):
         module_drawer=RoundedModuleDrawer(),
         color_mask=RadialGradiantColorMask(),
     )
-    img.save(IMAGES_PATH + "/qr" + str(idx) + ".png")
+    img.save(path.join(IMAGES_PATH, "qr" + str(idx) + ".png"))
     file_names.append("qr" + str(idx) + ".png")
 
 
@@ -107,7 +107,7 @@ def upload_to_drive(service):
         file_metadata = {"name": file_name}
         try:
             media = MediaFileUpload(
-                (IMAGES_PATH + "/{0}").format(file_name), mimetype=mime_type
+                path.join(IMAGES_PATH, "{0}").format(file_name), mimetype=mime_type
             )
             file = (
                 service.files()
