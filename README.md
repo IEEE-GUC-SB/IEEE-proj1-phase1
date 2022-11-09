@@ -19,7 +19,7 @@ $ poetry install
 ### Usage
 
 ```
-$ cd attendees-qrcode
+$ cd IEEE-proj1-phase1
 $ python3 src.py
 ```
 ### Contributors
