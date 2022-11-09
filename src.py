@@ -1,5 +1,4 @@
 import os
-import random
 from os import path
 
 import pandas as pd
@@ -13,49 +12,27 @@ from qrcode.image.styles.colormasks import RadialGradiantColorMask
 from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
 
 from google_services import create_service
+from data_generator import generate_dummy_data
 
 
-def generate_dummy_data():
+def read_input_file():
     if path.exists("./attendees.csv"):
         df = pd.read_csv("attendees.csv")
-        return df
     elif path.exists("./attendees.xlsx"):
         read_file = pd.read_excel("attendees.xlsx")
         read_file.to_csv("attendees.csv", index=None, header=True)
         df = pd.DataFrame(pd.read_csv("attendees.csv"))
-        return df
     else:
-        faker = Faker()
-        df = pd.DataFrame(data={})
-        df.to_csv("./attendees.csv", sep=",", index=False)
-        id_prefixes = ["L-", "W-", "HW-", "SW-"]
-        names = []
-        emails = []
-        ids = []
+        generate_dummy_data_response = input("attendees file not found. Would you like to generate one with random data instead? (Y/N)")
+        if generate_dummy_data_response.lower() == 'y':
+            df = generate_dummy_data()
+        else:
+            print("Script terminated")
+            quit()
 
-        for _ in range(6):
-            name = faker.name()
-            id = f"{random.choice(id_prefixes)}{faker.random_number(digits = 5)}"
-            first_name = name.split()[0].lower()
-            last_name = name.split()[1].lower()
-            email = f"{first_name}.{last_name}@{faker.free_email_domain()}"
-
-            names.append(name)
-            emails.append(email)
-            ids.append(id)
-
-    df["Name"] = names
-    df["Email"] = emails
-    df["ID"] = ids
-
-    df.to_csv("./attendees.csv")
     return df
 
-
-df = generate_dummy_data()
-
 file_names = []
-
 
 def qr_generating(data, idx):
     qr = qrcode.QRCode(
