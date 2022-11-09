@@ -14,9 +14,9 @@ def generate_dummy_data():
 	emails = []
 	ids = []
 
-	n = int(input("Number of rows? \n"))
+	num_of_rows = int(input("Number of rows? \n"))
 
-	for _ in range(n):
+	for _ in range(num_of_rows):
 		name = faker.name()
 		id = f'{random.choice(id_prefixes)}{faker.random_number(digits = 5)}'
 		first_name = name.split()[0].lower()
@@ -32,5 +32,5 @@ def generate_dummy_data():
 	df['ID'] = ids
 
 	df.to_csv("./attendees.csv")
-	print(n, ' rows generated in ', df.Name)
+	print(num_of_rows, ' rows generated in ', df.Name)
 	return df

@@ -3,8 +3,6 @@ from os import path
 
 import pandas as pd
 import qrcode
-from faker import Faker
-from faker.providers import internet
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from qrcode.image.styledpil import StyledPilImage
