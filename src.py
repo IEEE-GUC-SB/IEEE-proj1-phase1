@@ -1,4 +1,5 @@
 import os
+import errno
 from os import path
 
 import pandas as pd
@@ -21,12 +22,7 @@ def read_input_file():
         read_file.to_csv("attendees.csv", index=None, header=True)
         df = pd.DataFrame(pd.read_csv("attendees.csv"))
     else:
-        generate_dummy_data_response = input("attendees file not found. Would you like to generate one with random data instead? (Y/N)")
-        if generate_dummy_data_response.lower() == 'y':
-            df = generate_dummy_data()
-        else:
-            print("Script terminated")
-            quit()
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), 'attendees.csv')
 
     return df
 
