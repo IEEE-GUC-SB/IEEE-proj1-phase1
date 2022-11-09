@@ -8,7 +8,6 @@ from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 
 
 def create_service_with_api(client_secret_file, api_name, api_version, *scopes):
-    print(client_secret_file, api_name, api_version, scopes, sep="-")
     CLIENT_SECRET_FILE = client_secret_file
     API_SERVICE_NAME = api_name
     API_VERSION = api_version
