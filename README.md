@@ -38,7 +38,3 @@ $ python3 src.py --input <input_file> --output <output_file>
 - [Amir Tarek](https://github.com/amir-awad) (amirtarek04@gmail.com)
 - [Farida Maheeb](https://github.com/FaridaAbdelghaffar) (fmaheeb@gmail.com)
 - [Omar Hesham](https://github.com/omarhesham02) (omar.hesham-youssef@outlook.com)
-
-```
-
-```
