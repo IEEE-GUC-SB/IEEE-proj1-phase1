@@ -8,21 +8,33 @@ In order to run the script and make it upload the qr photos to a google drive, y
 
 2. Contact one of the contributors to send you our own credentials file. It is not added here due to privacy concerns. You can find our emails in the Contributors section below.
 
-
 ### Installation
-The script requires ```poetry``` (a dependency management tool) to run. You can install ```poetry``` with pip as such:
+
+```bash
+$ git clone https://github.com/IEEE-GUC-SB/IEEE-proj1-phase1
+$ cd IEEE-proj1-phase1
 ```
+
+The script requires `poetry` (a dependency management tool) to run. You can install `poetry` with pip as such:
+
+```bash
 $ pip3 install poetry
 $ poetry install
 ```
 
 ### Usage
 
+```bash
+$ python3 generate_test_data.py -h
+$ python3  --output <output_file> --num_of_rows <number_of_rows>
+Dummy data generated in <output_file> with <number_of_rows> rows
+$ python3 src.py -h
+usage: src.py [-h] --input INPUT --output OUTPUT
+$ python3 src.py --input <input_file> --output <output_file>
 ```
-$ cd IEEE-proj1-phase1
-$ python3 src.py
-```
+
 ### Contributors
+
 - [Amir Tarek](https://github.com/amir-awad) (amirtarek04@gmail.com)
 - [Farida Maheeb](https://github.com/FaridaAbdelghaffar) (fmaheeb@gmail.com)
 - [Omar Hesham](https://github.com/omarhesham02) (omar.hesham-youssef@outlook.com)
