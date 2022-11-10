@@ -44,7 +44,6 @@ def main():
         "-n",
         "--num_of_rows",
         help="Number of rows",
-        required=True,
         default=10,
         type=int,
     )
