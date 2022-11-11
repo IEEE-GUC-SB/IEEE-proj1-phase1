@@ -3,10 +3,10 @@ import pickle
 from os import path
 
 from google.auth.transport.requests import Request
-from google_auth_oauthlib.flow import Flow, InstalledAppFlow
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
+from googleapiclient.http import MediaFileUpload
 
 
 def create_service_with_api(client_secret_file, api_name, api_version, *scopes):
@@ -55,7 +55,10 @@ def create_service():
 SERVICE = create_service()
 
 
-def upload_to_drive(file_name):
+def upload_to_drive(file_name: str) -> str:
+    """
+    Upload file to drive, make its link shareable and then return it.
+    """
     file_metadata = {"name": file_name}
     request_body = {"role": "reader", "type": "anyone"}
     IMAGES_PATH = "./qr_images"
@@ -64,13 +67,11 @@ def upload_to_drive(file_name):
         media = MediaFileUpload(
             path.join(IMAGES_PATH, "{0}").format(file_name), mimetype=mime_type
         )
-
         file = (
             SERVICE.files()
             .create(body=file_metadata, media_body=media, fields="webViewLink")
             .execute()
         )
-
         qr_code_link = file.get("webViewLink")
         qr_code_id = qr_code_link.split("/")[-2]
 

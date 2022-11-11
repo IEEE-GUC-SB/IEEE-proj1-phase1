@@ -5,7 +5,6 @@ from os import path
 
 import pandas as pd
 import qrcode
-from googleapiclient.http import MediaFileUpload
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
 from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
