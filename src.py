@@ -68,7 +68,7 @@ qr_codes_ids = []
 qr_codes_urls = []
 
 
-def get_qr_codes_urls():
+def get_qr_codes_urls() -> None:
     for file_name in file_names:
         url = upload_to_drive(file_name)
         qr_codes_urls.append(url)
